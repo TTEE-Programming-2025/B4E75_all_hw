@@ -225,3 +225,14 @@ int main() {
     }
     return 0;
 }
+
+// Final project of the semester - combining arrays and structs made it much harder, but I managed to complete it through hard work!
+// The last project this semester was far more complex than before, but with persistent learning, I got it done!
+// This project mixed arrays and structs, making it quite challenging, but the effort paid off in the end!
+// The semester's final project was significantly tougher, but after continuous study and practice, I succeeded!
+// Combining arrays and structs made this project trickier than previous ones, but I still finished it strong!
+// The ultimate challenge this semester - higher complexity, but through steady practice, I made it work!
+// This project's difficulty spiked with arrays + structs, but I pushed through and solved it!
+// The semester's capstone project was way more complex, but after deep study, I cracked it!
+// Final mission: arrays + structs = extreme difficulty, but perseverance led to success!
+// The last test of the semester - more complex logic, but persistence made it a win!
