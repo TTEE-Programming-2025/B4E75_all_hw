@@ -1,4 +1,4 @@
-#include <stdio.h>  //#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
@@ -10,6 +10,15 @@
 
 char seats[SIZE][SIZE];
 char tempSeats[SIZE][SIZE];
+
+// Function prototypes
+void iniSeats();
+void showSeats();
+void showTempSeats();
+void autoSeats();
+void manualSeats();
+int passwordCheck();
+int confirmContinue();
 
 void iniSeats() {
     srand((unsigned)time(NULL));
@@ -61,7 +70,8 @@ void autoSeats() {
     printf("How many seats do you need (1~4)?: ");
     scanf("%d", &n);
     if (n < 1 || n > 4) {
-        printf("Error, please enter again");
+        printf("Error, please enter again\n");
+        getch();
         return;
     }
 
@@ -96,99 +106,68 @@ void autoSeats() {
             }
         }
     }
-}
 
-int main() {
-    iniSeats();
-    
-    int choice;
-    while(1) {
-        printf("1. Show Seats\n");
-        printf("2. Auto Select Seats\n");
-        printf("3. Show Temporary Seats\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        
-        switch(choice) {
-            case 1:
-                showSeats();
-                break;
-            case 2:
-                autoSeats();
-                break;
-            case 3:
-                showTempSeats();
-                printf("\nPress any key to continue...");
-                getch();
-                system("cls");
-                break;
-            case 4:
-                return 0;
-            default:
-                printf("Invalid choice\n");
-        }
-    }
-    return 0;
-}
-  if (!found) {
+    if (!found) {
         printf("Can't find your seats!\n");
+        getch();
         return;
     }
 
     showTempSeats();
-    printf("Are you happy with the seats? (y/n)\n");
+    printf("Are you happy with the seats? (y/n): ");
     char ch;
-    scanf(" %c", &ch);
+    scanf(" %c", &ch);  // Note the space before %c to skip whitespace
     if (ch == 'y' || ch == 'Y') {
         for (int i = 0; i < SIZE; i++) 
             for (int j = 0; j < SIZE; j++) 
                 if (tempSeats[i][j] == '@') 
                     seats[i][j] = '*';
-    } 
+    }
     printf("Back to main menu\n");
+    getch();
     system("cls");
 }
 
-// Manual seats
 void manualSeats() {
     int n;
-    printf("How many seats do you need? (1~4)");
+    printf("How many seats do you need? (1~4): ");
     scanf("%d", &n);
     if (n < 1 || n > 4) {
-        printf("Error, please enter again");
+        printf("Error, please enter again\n");
+        getch();
         return;
     }
 
     memcpy(tempSeats, seats, sizeof(seats));
     int c, r;
-    for  (int i = 0;  i < n; i++) {
-        printf("Row for the %d seats: ", i + 1);
-        getch();
+    for (int i = 0; i < n; i++) {
+        printf("Row for seat %d: ", i + 1);
         scanf("%d", &r);
-        printf("Column for the %d seats: ", i + 1);
-        getch();
+        printf("Column for seat %d: ", i + 1);
         scanf("%d", &c);
-        if (r < 1 || r > 9 || c < 1 || c > 9 || tempSeats[r - 1][c - 1] != '-') {
-            printf("The seat you choose is already reserved\n");
+        
+        if (r < 1 || r > SIZE || c < 1 || c > SIZE || tempSeats[r - 1][c - 1] != '-') {
+            printf("Invalid seat or already reserved\n");
             i--;
-        } else {
-            tempSeats[r - 1][c - 1] = '@';
+            continue;
         }
+        tempSeats[r - 1][c - 1] = '@';
     }
 
     showTempSeats();
-    printf("\nPlease confirm\n");
-    getch();
-
-    for (int i = 0; i < SIZE; i++) 
-        for (int j = 0; j < SIZE; j++) 
-            if (tempSeats[i][j] == '@') 
-                seats[i][j] = '*';
+    printf("\nPlease confirm (y/n): ");
+    char ch;
+    scanf(" %c", &ch);
+    
+    if (ch == 'y' || ch == 'Y') {
+        for (int i = 0; i < SIZE; i++) 
+            for (int j = 0; j < SIZE; j++) 
+                if (tempSeats[i][j] == '@') 
+                    seats[i][j] = '*';
+    }
     system("cls");            
 }
 
-// Checking the  password to see if it's correct
 int passwordCheck() {
     int input, attempt = 0;
     while (attempt < 3) {
@@ -196,36 +175,34 @@ int passwordCheck() {
         scanf("%d", &input);
         if (input == PASSWORD) {
             printf("Welcome!\n");
-            return(1);
+            getch();
+            return 1;
         } else {
-            printf("Wrong  password\n");
+            printf("Wrong password\n");
             attempt++;
         }
     }
-    printf("Error, shutting down");
+    printf("Too many attempts. Shutting down...\n");
+    getch();
     return 0;
 }
 
-// Comfirming exiting the program
 int confirmContinue() { 
     char choice;
     while (1) {
-        printf("Enter again (y/n)? ");
+        printf("Are you sure you want to exit? (y/n): ");
         scanf(" %c", &choice);
         if (choice == 'y' || choice == 'Y') {
-            system("cls");
-            return 1;
-        } else if (choice == 'n' || choice == 'N') {
-            printf("Ending...\n");
             return 0;
+        } else if (choice == 'n' || choice == 'N') {
+            return 1;
         } else {
-            printf("Warning: Enter y or n\n");
+            printf("Please enter y or n\n");
         }
     }
 }
 
-int main() // Main body
-{
+void displayWelcome() {
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
@@ -246,23 +223,27 @@ int main() // Main body
     printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+}
+
+int main() {
+    displayWelcome();
     if (!passwordCheck()) return 0;
 
     iniSeats();
 
     char input;
     do {
-        system("cls"); // Cleaning screen
-        printf("------------------------------\n");
-        printf("| a. : Available seats       |\n");
-        printf("| b. : Arrange for you       |\n");
-        printf("| c. : Choose by yourself    |\n");
-        printf("| d. : Exit                  |\n");
-        printf("------------------------------\n");
-        scanf("%c", &input);
-
         system("cls");
-        switch(input) { // Deciding with funtion we are using
+        printf("------------------------------\n");
+        printf("| a. Available seats         |\n");
+        printf("| b. Arrange for you         |\n");
+        printf("| c. Choose by yourself      |\n");
+        printf("| d. Exit                    |\n");
+        printf("------------------------------\n");
+        printf("Enter your choice: ");
+        scanf(" %c", &input);  // Note the space before %c to skip whitespace
+
+        switch(input) {
             case 'a':
                 showSeats();
                 break;
@@ -273,14 +254,38 @@ int main() // Main body
                 manualSeats();
                 break;
             case 'd':
-                if (!confirmContinue()){
-                return 0; 
-                }   
+                if (!confirmContinue()) {
+                    printf("Goodbye!\n");
+                    return 0;
+                }
+                break;
             default:
-                printf("Wrong option enter again!\n");
+                printf("Invalid option. Please try again.\n");
+                getch();
                 break;
         }
     } while(1);
 
-    return  0;
+    return 0;
 }
+
+// This project was significantly more challenging than the previous one. While arrays themselves aren't that complicated,
+// implementing them correctly turned out to be much harder than expected, with lots of subtle details to handle.
+
+// The toughest part was implementing function b - ensuring that when users book 4 seats,
+// they must be adjacent. This logic took me a full two days to implement,
+// with multiple rewrites and moments where I almost gave up...
+
+// During debugging, I realized my boundary condition checks weren't rigorous enough -
+// I kept missing edge cases, which caused numerous bugs in my code.
+
+// But through this struggle, I've noticeably improved my array manipulation and logical reasoning skills,
+// and learned to approach problems more systematically. These lessons are incredibly valuable.
+
+// Although the process was painful, the sense of accomplishment afterwards was immense.
+// I'm certain these gains will form an important foundation for tackling more complex projects in the future.
+
+// Next time I work on a similar project, I'll definitely draw a flowchart before coding -
+// that should help me avoid many detours!
+
+
