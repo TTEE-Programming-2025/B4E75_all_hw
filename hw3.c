@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 #include <conio.h> // For getch()
-#include <time.h>
-#include <string.h>
+#include <ctime>
+#include <cstring>
 
 #define SIZE 9
 #define MAX_RESERVED 10 
@@ -10,35 +10,47 @@
 
 char seats[SIZE][SIZE];
 char tempSeats[SIZE][SIZE];
-// Initialise seats and tag 10 random seats as '*'
+
+// Initialize seats and tag 10 random seats as '*'
 void iniSeats() {
-    for (int i = 0; i < SIZE; i++)
-       for (int j = 0; j < SIZE; j++)
-          seats[i][j]='-';
+    // Initialize random seed
+    srand(static_cast<unsigned int>(time(nullptr)));
+    
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            seats[i][j] = '-';
+        }
+    }
 
     int count = 0;
     while (count < MAX_RESERVED) {
-        int r = rand() %SIZE;
-        int c = rand() %SIZE;
-        if(seats[r][c] != '*') {
-           seats[r][c] = '*';
-           count++;
+        int r = rand() % SIZE;
+        int c = rand() % SIZE;
+        if (seats[r][c] != '*') {
+            seats[r][c] = '*';
+            count++;
         }
     }
 }
 
 // Showing the seats 
 void showSeats() {
-    printf("\\123456789\n");
+    std::cout << "\\123456789\n";
     for (int i = SIZE - 1; i >= 0; i--) {
-        printf("%d", i + 1);
+        std::cout << (i + 1);
         for (int j = 0; j < SIZE; j++) {
-            printf("%c", seats[i][j]);
+            std::cout << seats[i][j];
         }
-        printf("\n");
+        std::cout << "\n";
     }
-    printf("\nPress any key to return to main menu");
+    std::cout << "\nPress any key to return to main menu";
     getch();
     system("cls");
+}
+
+int main() {
+    iniSeats();
+    showSeats();
+    return 0;
 }
 
