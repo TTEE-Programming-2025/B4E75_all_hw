@@ -148,3 +148,35 @@ int main() // Main body
             printf("Wrong password, reamining attempts:%d\n", 3 - i);
         }
     }
+     while (1) // Main body
+        {
+            system("cls"); // Cleaning screen
+            printf("------------------------------\n");
+            printf("| a. : Draw a Right Triangle |\n");
+            printf("| b. : 9x9 Table             |\n");
+            printf("| c. : Exit                  |\n");
+            printf("------------------------------\n");
+            getchar(); // waiting for user to type anything
+            scanf("%c", &input);
+
+            switch(input){ // Deciding with funtion we are using
+                case 'a':
+                case 'A':
+                    triangleOption();
+                    break;
+                case 'b':
+                case 'B':
+                    multiplicationTable();
+                    break;
+                case 'c':
+                case 'C':
+                    if (!confirmContinue()){
+                        return 0;
+                    }
+                    break;
+                default:
+                    printf("Wrong option enter again!\n");
+                    break;
+            }
+        }
+        return  0;
