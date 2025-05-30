@@ -131,3 +131,156 @@ int main() {
     }
     return 0;
 }
+  if (!found) {
+        printf("Can't find your seats!\n");
+        return;
+    }
+
+    showTempSeats();
+    printf("Are you happy with the seats? (y/n)\n");
+    char ch;
+    scanf(" %c", &ch);
+    if (ch == 'y' || ch == 'Y') {
+        for (int i = 0; i < SIZE; i++) 
+            for (int j = 0; j < SIZE; j++) 
+                if (tempSeats[i][j] == '@') 
+                    seats[i][j] = '*';
+    } 
+    printf("Back to main menu\n");
+    system("cls");
+}
+
+// Manual seats
+void manualSeats() {
+    int n;
+    printf("How many seats do you need? (1~4)");
+    scanf("%d", &n);
+    if (n < 1 || n > 4) {
+        printf("Error, please enter again");
+        return;
+    }
+
+    memcpy(tempSeats, seats, sizeof(seats));
+    int c, r;
+    for  (int i = 0;  i < n; i++) {
+        printf("Row for the %d seats: ", i + 1);
+        getch();
+        scanf("%d", &r);
+        printf("Column for the %d seats: ", i + 1);
+        getch();
+        scanf("%d", &c);
+        if (r < 1 || r > 9 || c < 1 || c > 9 || tempSeats[r - 1][c - 1] != '-') {
+            printf("The seat you choose is already reserved\n");
+            i--;
+        } else {
+            tempSeats[r - 1][c - 1] = '@';
+        }
+    }
+
+    showTempSeats();
+    printf("\nPlease confirm\n");
+    getch();
+
+    for (int i = 0; i < SIZE; i++) 
+        for (int j = 0; j < SIZE; j++) 
+            if (tempSeats[i][j] == '@') 
+                seats[i][j] = '*';
+    system("cls");            
+}
+
+// Checking the  password to see if it's correct
+int passwordCheck() {
+    int input, attempt = 0;
+    while (attempt < 3) {
+        printf("Enter the password: ");
+        scanf("%d", &input);
+        if (input == PASSWORD) {
+            printf("Welcome!\n");
+            return(1);
+        } else {
+            printf("Wrong  password\n");
+            attempt++;
+        }
+    }
+    printf("Error, shutting down");
+    return 0;
+}
+
+// Comfirming exiting the program
+int confirmContinue() { 
+    char choice;
+    while (1) {
+        printf("Enter again (y/n)? ");
+        scanf(" %c", &choice);
+        if (choice == 'y' || choice == 'Y') {
+            system("cls");
+            return 1;
+        } else if (choice == 'n' || choice == 'N') {
+            printf("Ending...\n");
+            return 0;
+        } else {
+            printf("Warning: Enter y or n\n");
+        }
+    }
+}
+
+int main() // Main body
+{
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@          @@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@ @@@@@@@@@@@@  @@@@@@@@@@@@@\n");
+    printf("@@@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    if (!passwordCheck()) return 0;
+
+    iniSeats();
+
+    char input;
+    do {
+        system("cls"); // Cleaning screen
+        printf("------------------------------\n");
+        printf("| a. : Available seats       |\n");
+        printf("| b. : Arrange for you       |\n");
+        printf("| c. : Choose by yourself    |\n");
+        printf("| d. : Exit                  |\n");
+        printf("------------------------------\n");
+        scanf("%c", &input);
+
+        system("cls");
+        switch(input) { // Deciding with funtion we are using
+            case 'a':
+                showSeats();
+                break;
+            case 'b':
+                autoSeats();
+                break;
+            case 'c':
+                manualSeats();
+                break;
+            case 'd':
+                if (!confirmContinue()){
+                return 0; 
+                }   
+            default:
+                printf("Wrong option enter again!\n");
+                break;
+        }
+    } while(1);
+
+    return  0;
+}
