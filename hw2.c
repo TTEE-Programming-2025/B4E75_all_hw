@@ -1,100 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <conio.h> // For getch()
 
-void cleanScreen() {
-    system("cls");
+void cleanScreen(){ // Clean screen
+    system("cls"); 
 }
 
-void multiplicationTable() {
+void multiplicationTable(){ //Multiplication table generator
     int n;
-    char ch;
-    
     cleanScreen();
-    while(1) {
+    while(1){
         printf("Enter a number:");
-        if(scanf("%d", &n) != 1) {
-            while((ch = getchar()) != '\n');
-            printf("Warning: Invalid input. Enter again:\n");
-            continue;
-        }
-        
-        if(n >= 1 && n <= 9) {
-            cleanScreen();
-            for(int i = 1; i <= n; i++) {
-                for(int j = 1; j <= i; j++) {
-                    printf("%d*%d=%2d ", j, i, i*j);
+        scanf("%d", &n);
+        if(n>=1&&n<=9){
+            for(int i=1; i<=n; i++){
+                for(int j=1; j<=n; j++){
+                    printf("%d*%d=%2d ",i,j,i*j);
                 }
                 printf("\n");
             }
-            printf("\nPress any key to continue...");
+            printf("\nEnter a key to back to main menu");
             getch();
             cleanScreen();
             return;
-        }
-        else {
+        } else{
             printf("Warning: Enter again:\n");
         }
     }
 }
 
-void drawTriangle(char ch) {
-    for(int i = ch; i >= 'a'; i--) {
-        for(int j = i; j <= ch; j++) {
+void drawTriangle(char ch){ // Triangle drawing function
+    for(int i=ch; i>='a'; i--){
+        for(int j=i; j<=ch; j++){
             printf("%c", j);
         }
         printf("\n");
     }
 }
 
-void triangleOption() {
+void triangleOption() { // Replacing the star symbol with the letter user type in
     char ch;
     cleanScreen();
-    while(1) {
+    while (1) {
         printf("Enter character between a and n:");
-        while(getchar() != '\n');
+        while (getchar() != '\n'); // Clean the buffer 
         scanf("%c", &ch);
 
-        if(ch >= 'a' && ch <= 'n') {
-            cleanScreen();
+        if (ch>='a'&&ch<='n') {
             drawTriangle(ch);
-            printf("\nPress any key to continue...");
+            printf("\nEnter a key to back to main menu\n");
             getch();
             cleanScreen();
             return;
-        }
-        else {
+        } else {
             printf("Warning: Enter again\n");
-            while(getchar() != '\n');
+            fflush(stdin); // Clean the buffer 
         }
     }
 }
 
-int main() {
-    int choice;
-    while(1) {
-        printf("1. Multiplication Table\n");
-        printf("2. Character Triangle\n");
-        printf("3. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        
-        switch(choice) {
-            case 1:
-                multiplicationTable();
-                break;
-            case 2:
-                triangleOption();
-                break;
-            case 3:
-                return 0;
-            default:
-                printf("Invalid choice\n");
-                while(getchar() != '\n');
-        }
-    }
-    return 0;
-}
 int confirmContinue() { // Comfirming exiting the program
     char choice;
     while (1) {
@@ -115,25 +79,26 @@ int confirmContinue() { // Comfirming exiting the program
 int main() // Main body
 {
     int password, i=0;
-    char input;   
-	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@ @@@@@@@@@@@@@@@@@ @@@@@@@@@@@\n");
-    printf("@@@@@    @@@@@@@@@@@@@@@@ @@@@@@@@@@@\n");
-    printf("@@@@@@  @@@@@@@@@@@@@@@@@ @@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@@                     @@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-    printf("@@@@                         @@@@@@@@\n");
+    char input;
+
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@          @@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@ @@@@@@@@@@@@  @@@@@@@@@@@@@\n");
+    printf("@@@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@\n");
+    printf("@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 
@@ -148,7 +113,8 @@ int main() // Main body
             printf("Wrong password, reamining attempts:%d\n", 3 - i);
         }
     }
-     while (1) // Main body
+
+    while (1) // Main body
         {
             system("cls"); // Cleaning screen
             printf("------------------------------\n");
@@ -180,3 +146,4 @@ int main() // Main body
             }
         }
         return  0;
+}
