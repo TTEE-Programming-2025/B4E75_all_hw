@@ -3,7 +3,7 @@
 #include <conio.h>
 
 void cleanScreen() {
-    system("cls"); 
+    system("cls");
 }
 
 void multiplicationTable() {
@@ -14,7 +14,7 @@ void multiplicationTable() {
     while(1) {
         printf("Enter a number:");
         if(scanf("%d", &n) != 1) {
-            while((ch = getchar()) != '\n' && ch != EOF);
+            while((ch = getchar()) != '\n');
             printf("Warning: Invalid input. Enter again:\n");
             continue;
         }
@@ -22,18 +22,76 @@ void multiplicationTable() {
         if(n >= 1 && n <= 9) {
             cleanScreen();
             for(int i = 1; i <= n; i++) {
-                for(int j = 1; j <= n; j++) {
-                    printf("%d*%d=%2d ", i, j, i*j);
+                for(int j = 1; j <= i; j++) {
+                    printf("%d*%d=%2d ", j, i, i*j);
                 }
                 printf("\n");
             }
-            printf("\nEnter a key to back to main menu");
-            while((ch = getchar()) != '\n' && ch != EOF);
+            printf("\nPress any key to continue...");
             getch();
             cleanScreen();
             return;
-        } else {
+        }
+        else {
             printf("Warning: Enter again:\n");
         }
     }
+}
+
+void drawTriangle(char ch) {
+    for(int i = ch; i >= 'a'; i--) {
+        for(int j = i; j <= ch; j++) {
+            printf("%c", j);
+        }
+        printf("\n");
+    }
+}
+
+void triangleOption() {
+    char ch;
+    cleanScreen();
+    while(1) {
+        printf("Enter character between a and n:");
+        while(getchar() != '\n');
+        scanf("%c", &ch);
+
+        if(ch >= 'a' && ch <= 'n') {
+            cleanScreen();
+            drawTriangle(ch);
+            printf("\nPress any key to continue...");
+            getch();
+            cleanScreen();
+            return;
+        }
+        else {
+            printf("Warning: Enter again\n");
+            while(getchar() != '\n');
+        }
+    }
+}
+
+int main() {
+    int choice;
+    while(1) {
+        printf("1. Multiplication Table\n");
+        printf("2. Character Triangle\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch(choice) {
+            case 1:
+                multiplicationTable();
+                break;
+            case 2:
+                triangleOption();
+                break;
+            case 3:
+                return 0;
+            default:
+                printf("Invalid choice\n");
+                while(getchar() != '\n');
+        }
+    }
+    return 0;
 }
