@@ -147,3 +147,24 @@ int main() // Main body
         }
         return  0;
 }
+
+// The program's difficulty increased significantly
+// Using functions worked better than do-while
+// Initially tried to reuse HW1's code
+// But needed three features plus main menu
+// Decided to refactor using switch-case with functions
+
+// Designed functions using lecture examples
+// Function structure wasn't too problematic
+// But fine-tuning took all night
+// Just to meet professor's specifications
+
+// Learned that the key lies in
+// Thorough understanding of the code
+// Need more practice to improve
+// To truly master C programming
+
+// The process was challenging
+// But gained valuable hands-on experience
+// Became more comfortable with functions
+// Will be more confident next time
